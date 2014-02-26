@@ -1,0 +1,18 @@
+{
+    "versionLabel": "1.0",
+    "uuid": "344ca0b6-9aca-4cf6-a2d1-4a72699f8751",
+    "appKeys": {},
+    "longName": "UR",
+    "versionCode": 1,
+    "capabilities": [
+        ""
+    ],
+    "shortName": "UR",
+    "companyName": "underdopi",
+    "watchapp": {
+        "watchface": false
+    },
+    "resources": {
+        "media": []
+    }
+}
