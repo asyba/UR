@@ -13,6 +13,22 @@
         "watchface": false
     },
     "resources": {
-        "media": []
+        "media": [
+            {
+                "type": "png",
+                "name": "IMAGE_PLAY",
+                "file": "images/actionbar_playpause.png"
+            },
+            {
+                "type": "png",
+                "name": "IMAGE_DOWN",
+                "file": "images/arrow_down.png"
+            },
+            {
+                "type": "png",
+                "name": "IMAGE_UP",
+                "file": "images/arrow_up.png"
+            }
+        ]
     }
 }

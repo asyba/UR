@@ -1,4 +1,9 @@
 #include "pebble.h"
+#include "appMessage.h"
+#include "sendData.h"
+#include "pc.h"
+#include "Monitor.h"
+#include "Vlc.h"
 
 #define NUM_CLIENT_MENU_ITEMS 3
 #define NUM_MENU_SECTIONS 1
@@ -11,29 +16,28 @@ static SimpleMenuSection menu_sections[NUM_MENU_SECTIONS];
 
 static SimpleMenuItem bus_menu_items[NUM_CLIENT_MENU_ITEMS];
 
-static void send_message(char* message) {
-
-  DictionaryIterator *iter;
-  app_message_outbox_begin(&iter);
-
-  Tuplet value = TupletCString(1, message);
-  dict_write_tuplet(iter, &value);
-
-  app_message_outbox_send();
-}
 
 static void bus1_select_callback(int index, void *ctx) {
-  send_message("test1");
+  //send_message("test1");
+    
+    //send_message(UP_KEY);
+    
   APP_LOG(APP_LOG_LEVEL_DEBUG, "t1");
+    
+    
+    
+    show_vlc_menu();
 }
 static void bus2_select_callback(int index, void *ctx) {
-  send_message("test2");
+  //send_message("test2");
   APP_LOG(APP_LOG_LEVEL_DEBUG, "t2");
+    show_menu_pc();
 
 }
 static void bus3_select_callback(int index, void *ctx) {
-  send_message("test3");
+  //send_message("test3");
   APP_LOG(APP_LOG_LEVEL_DEBUG, "t3");
+    show_menu_monitor();
 
 }
 
@@ -43,23 +47,23 @@ static void window_load(Window *window) {
   int num_a_items = 0;
 
   bus_menu_items[num_a_items++] = (SimpleMenuItem){
-    .title = "Test 1",
+    .title = "Media Players",
         .subtitle = "",
     .callback = bus1_select_callback,
   };
   bus_menu_items[num_a_items++] = (SimpleMenuItem){
-    .title = "Test 2",
+    .title = "PC",
         .subtitle = "",
     .callback = bus2_select_callback,
   };
   bus_menu_items[num_a_items++] = (SimpleMenuItem){
-    .title = "Test 3",
+    .title = "Monitor",
         .subtitle = "",
     .callback = bus3_select_callback,
   };
   
   menu_sections[0] = (SimpleMenuSection){
-  .title ="UR",
+  .title ="Control Category",
   .num_items = NUM_CLIENT_MENU_ITEMS,
   .items = bus_menu_items,
   };
@@ -77,6 +81,7 @@ static void window_unload(Window *window) {
 
 int main(void) {
   window = window_create();
+    appmessage_init();
 
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,
@@ -87,10 +92,7 @@ int main(void) {
 
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Done initializing, pushed window: %p", window);
 	
-  const uint32_t inbound_size = 64;
-  const uint32_t outbound_size = 64;
-  app_message_open(inbound_size, outbound_size);
-	
+
   app_event_loop();
 
   window_destroy(window);
